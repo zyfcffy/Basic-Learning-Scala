@@ -10,13 +10,13 @@ import java.time.{LocalDateTime, ZoneId}
 * example:
 * with
 * fact_count as (
-* select count(*) as counts from fact_table_name where pt_d = 20210401
+* select count(*) as counts from fact_table_name
 * ),
 * ods_table1 as (
-* select * from ods_table_name where pt_d = 20210401
+* select * from ods_table_name where type = 1 and count = 2
 * ),
 * ods_table2 as (
-* select * from ods_table_name where pt_d = 20210401
+* select * from ods_table_name
 * ),
 * ods_join as (
 * select * from ods_table1 join ods_table2 on ods_table1.id = ods_table2.user_id
@@ -34,6 +34,7 @@ object FormatSql {
   }
 
  def executeSql(): Unit ={
+   //partition不需要传入
    val yesterday: LocalDateTime = LocalDateTime.now(ZoneId.of("Asia/Shanghai")).minusDays(1)
    val partition: String = DateTimeFormatter.ofPattern("yyyyMMdd").format(yesterday)
    println(partition)
